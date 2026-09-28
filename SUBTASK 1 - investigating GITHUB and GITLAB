@@ -1,0 +1,30 @@
+Identify the core distinction in licensing approaches between GitLab and GitHub. 
+Core distinction in licensing approaches
+GitLab: The core GitLab Community Edition is open-source, allowing users to view, modify, and distribute its source code under the applicable open-source license.
+GitHub:GitHub is primarily a proprietary, closed-source platform owned by Microsoft, although it supports and hosts many open-source projects.
+In short: GitLab has a stronger,open-source/self-hosting licensing approach, while GitHub is mainly a proprietary hosted service with open-source repositories hosted on it.Identify and list at least five features that are common to both GitHub and GitLab.
+
+ Common Features of GitHub and GitLab
+1. Git Repository Hosting – Both allow users to create, store, and manage Git repositories online.
+2. Version Control – Both track changes to source code and allow users to work with different versions.
+3. Issue Tracking – Both allow users to report bugs, create tasks, and track project issues.
+4. Code Review – Both allow developers to review code changes before they are added to the main project.
+5. Collaboration – Both allow multiple developers to work together on the same project.
+6. Branching and Merging – Both allow developers to create branches and merge completed changes into the main code.
+7. CI/CD – Both provide tools for automatically testing, building, and deploying software.
+
+
+Two features that are unique or particularly distinctive to GitHub are:
+1. GitHub Pages– Allows users to host websites directly from a GitHub repository, commonly used for project documentation, portfolios, and static websites.
+2. GitHub Codespaces – Provides cloud-based development environments where developers can write, run, and test code directly in a browser without setting up the development environment locally.Identify and list at least two features that are unique to GitLab.
+
+Two features that are unique or particularly distinctive to GitLab are:
+1. GitLab Auto DevOps– Automatically provides predefined CI/CD pipelines to help build, test, secure, and deploy applications with less manual configuration.
+2. Built-in Container Registry– GitLab includes an integrated registry for storing, managing, and deploying Docker/container images directly within a GitLab project.
+
+
+
+
+
+
+
