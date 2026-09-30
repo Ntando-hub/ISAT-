@@ -1,0 +1,89 @@
+Explanation of the Functions
+Function 1: Decimal to Binary
+
+The decimalToBinary() function converts a decimal number into binary.
+
+For example:
+
+Decimal: 17
+
+Binary: 10001
+
+The program repeatedly divides the decimal number by 2 and stores the remainders until the number becomes zero.
+
+17 ÷ 2 = 8 remainder 1
+8 ÷ 2  = 4 remainder 0
+4 ÷ 2  = 2 remainder 0
+2 ÷ 2  = 1 remainder 0
+1 ÷ 2  = 0 remainder 1
+
+Reading the remainders from bottom to top gives:
+
+10001
+Function 2: Binary to Decimal
+
+The binaryToDecimal() function converts a binary number into decimal.
+
+Example:
+
+Binary = 10001
+
+Calculation:
+
+1 × 16 = 16
+0 × 8  = 0
+0 × 4  = 0
+0 × 2  = 0
+1 × 1  = 1
+
+Therefore:
+
+16 + 1 = 17
+
+The answer is:
+
+Decimal = 17
+Function 3: Decimal to Hexadecimal
+
+The decimalToHexadecimal() function converts a decimal number to hexadecimal.
+
+Hexadecimal uses:
+
+0 1 2 3 4 5 6 7 8 9 A B C D E F
+
+For example:
+
+Decimal = 58
+Hexadecimal = 3A
+
+This is because:
+
+58 ÷ 16 = 3 remainder 10
+
+Hexadecimal value 10 is represented by A.
+
+Therefore:
+
+58 = 3A
+Function 4: Hexadecimal to Decimal
+
+The hexadecimalToDecimal() function converts hexadecimal into decimal.
+
+For example:
+
+Hexadecimal = 3A
+
+Calculation:
+
+3 × 16 = 48
+A = 10
+
+Therefore:
+
+48 + 10 = 58
+
+So:
+
+3A = 58
+
+The program also accepts lowercase hexadecimal letters such as a, b, c, d, e and f.
