@@ -1,238 +1,286 @@
 #include <iostream>
-#include <iomanip>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
-const int MAX_ORDERS = 50;
-
-// Function to display all orders
-void displayOrders(string orderIDs[], string customerNames[],
-                   int magwinyas[], float totalCosts[], int count)
+// ======================================================
+// FUNCTION 1: Decimal to Binary
+// ======================================================
+string decimalToBinary(int decimal)
 {
-    if (count == 0)
+    if (decimal == 0)
     {
-        cout << "\nNo orders available.\n";
-        return;
+        return "0";
     }
 
-    cout << "\n==================== ALL ORDERS ====================\n";
-    cout << left
-         << setw(12) << "Order ID"
-         << setw(18) << "Customer"
-         << setw(18) << "Magwinyas"
-         << setw(15) << "Total Cost" << endl;
+    string binary = "";
 
-    cout << "-------------------------------------------------------\n";
-
-    for (int i = 0; i < count; i++)
+    while (decimal > 0)
     {
-        cout << left
-             << setw(12) << orderIDs[i]
-             << setw(18) << customerNames[i]
-             << setw(18) << magwinyas[i]
-             << "R" << fixed << setprecision(2)
-             << totalCosts[i] << endl;
+        int remainder = decimal % 2;
+        binary = char(remainder + '0') + binary;
+        decimal = decimal / 2;
     }
+
+    return binary;
 }
 
-// Function to add a new order
-void addOrder(string orderIDs[], string customerNames[],
-              int magwinyas[], float totalCosts[], int &count)
+
+// ======================================================
+// FUNCTION 2: Binary to Decimal
+// ======================================================
+int binaryToDecimal(string binary)
 {
-    if (count >= MAX_ORDERS)
+    int decimal = 0;
+
+    for (int i = 0; i < binary.length(); i++)
     {
-        cout << "\nError: Maximum of 50 orders has been reached.\n";
-        return;
+        decimal = decimal * 2 + (binary[i] - '0');
     }
 
-    string customerName;
-    int numberOfMagwinyas;
-    float totalCost;
-
-    // Generate order ID
-    if (count == 0)
-    {
-        orderIDs[count] = "101";
-    }
-    else
-    {
-        int previousID = stoi(orderIDs[count - 1]);
-        orderIDs[count] = to_string(previousID + 1);
-    }
-
-    cout << "\n========== ADD NEW ORDER ==========\n";
-
-    cout << "Enter customer name: ";
-    cin.ignore();
-    getline(cin, customerName);
-
-    cout << "Enter number of Magwinyas: ";
-    cin >> numberOfMagwinyas;
-
-    cout << "Enter total cost: R";
-    cin >> totalCost;
-
-    customerNames[count] = customerName;
-    magwinyas[count] = numberOfMagwinyas;
-    totalCosts[count] = totalCost;
-
-    cout << "\nOrder successfully added!\n";
-    cout << "Order ID: " << orderIDs[count] << endl;
-
-    count++;
+    return decimal;
 }
 
-// Function to find an order by Order ID
-void findOrder(string orderIDs[], string customerNames[],
-               int magwinyas[], float totalCosts[], int count)
+
+// ======================================================
+// FUNCTION 3: Decimal to Hexadecimal
+// ======================================================
+string decimalToHexadecimal(int decimal)
 {
-    string searchID;
-
-    cout << "\nEnter Order ID to search: ";
-    cin >> searchID;
-
-    bool found = false;
-
-    for (int i = 0; i < count; i++)
+    if (decimal == 0)
     {
-        if (orderIDs[i] == searchID)
+        return "0";
+    }
+
+    string hexadecimal = "";
+    string hexDigits = "0123456789ABCDEF";
+
+    while (decimal > 0)
+    {
+        int remainder = decimal % 16;
+
+        hexadecimal = hexDigits[remainder] + hexadecimal;
+
+        decimal = decimal / 16;
+    }
+
+    return hexadecimal;
+}
+
+
+// ======================================================
+// FUNCTION 4: Hexadecimal to Decimal
+// ======================================================
+int hexadecimalToDecimal(string hexadecimal)
+{
+    int decimal = 0;
+
+    for (int i = 0; i < hexadecimal.length(); i++)
+    {
+        char digit = hexadecimal[i];
+        int value;
+
+        if (digit >= '0' && digit <= '9')
         {
-            cout << "\n========== ORDER FOUND ==========\n";
-            cout << "Order ID:       " << orderIDs[i] << endl;
-            cout << "Customer Name:  " << customerNames[i] << endl;
-            cout << "Magwinyas:      " << magwinyas[i] << endl;
-            cout << "Total Cost:     R"
-                 << fixed << setprecision(2)
-                 << totalCosts[i] << endl;
-
-            found = true;
-            break;
+            value = digit - '0';
         }
+        else if (digit >= 'A' && digit <= 'F')
+        {
+            value = digit - 'A' + 10;
+        }
+        else if (digit >= 'a' && digit <= 'f')
+        {
+            value = digit - 'a' + 10;
+        }
+        else
+        {
+            return -1;
+        }
+
+        decimal = decimal * 16 + value;
     }
 
-    if (!found)
-    {
-        cout << "\nOrder ID " << searchID << " was not found.\n";
-    }
+    return decimal;
 }
 
-// Function to calculate total revenue
-void calculateRevenue(float totalCosts[], int count)
-{
-    float totalRevenue = 0;
 
-    for (int i = 0; i < count; i++)
-    {
-        totalRevenue += totalCosts[i];
-    }
-
-    cout << "\n========== TOTAL REVENUE ==========\n";
-    cout << "Total revenue: R"
-         << fixed << setprecision(2)
-         << totalRevenue << endl;
-}
-
+// ======================================================
+// MAIN PROGRAM
+// ======================================================
 int main()
 {
-    // Parallel arrays
-    string orderIDs[MAX_ORDERS];
-    string customerNames[MAX_ORDERS];
-    int magwinyas[MAX_ORDERS];
-    float totalCosts[MAX_ORDERS];
-
-    // First 10 orders supplied by the assessment
-    orderIDs[0] = "101";
-    orderIDs[1] = "102";
-    orderIDs[2] = "103";
-    orderIDs[3] = "104";
-    orderIDs[4] = "105";
-    orderIDs[5] = "106";
-    orderIDs[6] = "107";
-    orderIDs[7] = "108";
-    orderIDs[8] = "109";
-    orderIDs[9] = "110";
-
-    customerNames[0] = "Thabo";
-    customerNames[1] = "Lerato";
-    customerNames[2] = "Nomvula";
-    customerNames[3] = "Sipho";
-    customerNames[4] = "Bongani";
-    customerNames[5] = "Lindiwe";
-    customerNames[6] = "Jabulani";
-    customerNames[7] = "Ayanda";
-    customerNames[8] = "Kgosi";
-    customerNames[9] = "Refilwe";
-
-    magwinyas[0] = 3;
-    magwinyas[1] = 5;
-    magwinyas[2] = 2;
-    magwinyas[3] = 4;
-    magwinyas[4] = 6;
-    magwinyas[5] = 1;
-    magwinyas[6] = 3;
-    magwinyas[7] = 2;
-    magwinyas[8] = 6;
-    magwinyas[9] = 4;
-
-    totalCosts[0] = 15.75;
-    totalCosts[1] = 30.50;
-    totalCosts[2] = 10.00;
-    totalCosts[3] = 22.00;
-    totalCosts[4] = 40.25;
-    totalCosts[5] = 5.50;
-    totalCosts[6] = 18.00;
-    totalCosts[7] = 12.75;
-    totalCosts[8] = 28.00;
-    totalCosts[9] = 24.50;
-
-    int count = 10;
     int choice;
+
+    // Used for generating random numbers
+    srand(time(0));
 
     do
     {
-        cout << "\n========================================\n";
-        cout << "       MAGWINYA MAGIC ORDER SYSTEM\n";
-        cout << "========================================\n";
-        cout << "1. Add a new order\n";
-        cout << "2. Display all orders\n";
-        cout << "3. Find an order by Order ID\n";
-        cout << "4. Calculate total revenue\n";
-        cout << "5. Exit\n";
-        cout << "========================================\n";
+        cout << endl;
+        cout << "==========================================" << endl;
+        cout << "       NUMBER CONVERSION PROGRAM" << endl;
+        cout << "==========================================" << endl;
+
+        cout << "1. Convert Decimal to Binary" << endl;
+        cout << "2. Convert Binary to Decimal" << endl;
+        cout << "3. Convert Decimal to Hexadecimal" << endl;
+        cout << "4. Convert Hexadecimal to Decimal" << endl;
+        cout << "5. Demo" << endl;
+        cout << "6. Exit" << endl;
+
+        cout << "==========================================" << endl;
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice)
+        // ==========================================
+        // OPTION 1: Decimal to Binary
+        // ==========================================
+        if (choice == 1)
         {
-            case 1:
-                addOrder(orderIDs, customerNames,
-                         magwinyas, totalCosts, count);
-                break;
+            int decimal;
 
-            case 2:
-                displayOrders(orderIDs, customerNames,
-                              magwinyas, totalCosts, count);
-                break;
+            cout << endl;
+            cout << "Enter a decimal number: ";
+            cin >> decimal;
 
-            case 3:
-                findOrder(orderIDs, customerNames,
-                          magwinyas, totalCosts, count);
-                break;
-
-            case 4:
-                calculateRevenue(totalCosts, count);
-                break;
-
-            case 5:
-                cout << "\nThank you for using Magwinya Magic Order System.\n";
-                break;
-
-            default:
-                cout << "\nInvalid choice. Please try again.\n";
+            if (decimal < 0)
+            {
+                cout << "Please enter a positive integer." << endl;
+            }
+            else
+            {
+                cout << "Binary: "
+                     << decimalToBinary(decimal)
+                     << endl;
+            }
         }
 
-    } while (choice != 5);
+        // ==========================================
+        // OPTION 2: Binary to Decimal
+        // ==========================================
+        else if (choice == 2)
+        {
+            string binary;
+
+            cout << endl;
+            cout << "Enter a binary number: ";
+            cin >> binary;
+
+            bool valid = true;
+
+            for (int i = 0; i < binary.length(); i++)
+            {
+                if (binary[i] != '0' && binary[i] != '1')
+                {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid)
+            {
+                cout << "Decimal: "
+                     << binaryToDecimal(binary)
+                     << endl;
+            }
+            else
+            {
+                cout << "Invalid binary number." << endl;
+            }
+        }
+
+        // ==========================================
+        // OPTION 3: Decimal to Hexadecimal
+        // ==========================================
+        else if (choice == 3)
+        {
+            int decimal;
+
+            cout << endl;
+            cout << "Enter a decimal number: ";
+            cin >> decimal;
+
+            if (decimal < 0)
+            {
+                cout << "Please enter a positive integer." << endl;
+            }
+            else
+            {
+                cout << "Hexadecimal: "
+                     << decimalToHexadecimal(decimal)
+                     << endl;
+            }
+        }
+
+        // ==========================================
+        // OPTION 4: Hexadecimal to Decimal
+        // ==========================================
+        else if (choice == 4)
+        {
+            string hexadecimal;
+
+            cout << endl;
+            cout << "Enter a hexadecimal number: ";
+            cin >> hexadecimal;
+
+            int result = hexadecimalToDecimal(hexadecimal);
+
+            if (result == -1)
+            {
+                cout << "Invalid hexadecimal number." << endl;
+            }
+            else
+            {
+                cout << "Decimal: "
+                     << result
+                     << endl;
+            }
+        }
+
+        // ==========================================
+        // OPTION 5: DEMO
+        // ==========================================
+        else if (choice == 5)
+        {
+            int randomNumber;
+
+            // Generate number between 0 and 99
+            randomNumber = rand() % 100;
+
+            cout << endl;
+            cout << "============== DEMO ==============" << endl;
+
+            cout << "Random number: "
+                 << randomNumber
+                 << endl;
+
+            cout << "Binary equivalent: "
+                 << decimalToBinary(randomNumber)
+                 << endl;
+        }
+
+        // ==========================================
+        // OPTION 6: EXIT
+        // ==========================================
+        else if (choice == 6)
+        {
+            cout << endl;
+            cout << "Exiting program..." << endl;
+            cout << "Thank you!" << endl;
+        }
+
+        // ==========================================
+        // INVALID OPTION
+        // ==========================================
+        else
+        {
+            cout << endl;
+            cout << "Invalid choice. Please try again." << endl;
+        }
+
+    } while (choice != 6);
 
     return 0;
 }
