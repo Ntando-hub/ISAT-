@@ -1,0 +1,238 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+const int MAX_ORDERS = 50;
+
+// Function to display all orders
+void displayOrders(string orderIDs[], string customerNames[],
+                   int magwinyas[], float totalCosts[], int count)
+{
+    if (count == 0)
+    {
+        cout << "\nNo orders available.\n";
+        return;
+    }
+
+    cout << "\n==================== ALL ORDERS ====================\n";
+    cout << left
+         << setw(12) << "Order ID"
+         << setw(18) << "Customer"
+         << setw(18) << "Magwinyas"
+         << setw(15) << "Total Cost" << endl;
+
+    cout << "-------------------------------------------------------\n";
+
+    for (int i = 0; i < count; i++)
+    {
+        cout << left
+             << setw(12) << orderIDs[i]
+             << setw(18) << customerNames[i]
+             << setw(18) << magwinyas[i]
+             << "R" << fixed << setprecision(2)
+             << totalCosts[i] << endl;
+    }
+}
+
+// Function to add a new order
+void addOrder(string orderIDs[], string customerNames[],
+              int magwinyas[], float totalCosts[], int &count)
+{
+    if (count >= MAX_ORDERS)
+    {
+        cout << "\nError: Maximum of 50 orders has been reached.\n";
+        return;
+    }
+
+    string customerName;
+    int numberOfMagwinyas;
+    float totalCost;
+
+    // Generate order ID
+    if (count == 0)
+    {
+        orderIDs[count] = "101";
+    }
+    else
+    {
+        int previousID = stoi(orderIDs[count - 1]);
+        orderIDs[count] = to_string(previousID + 1);
+    }
+
+    cout << "\n========== ADD NEW ORDER ==========\n";
+
+    cout << "Enter customer name: ";
+    cin.ignore();
+    getline(cin, customerName);
+
+    cout << "Enter number of Magwinyas: ";
+    cin >> numberOfMagwinyas;
+
+    cout << "Enter total cost: R";
+    cin >> totalCost;
+
+    customerNames[count] = customerName;
+    magwinyas[count] = numberOfMagwinyas;
+    totalCosts[count] = totalCost;
+
+    cout << "\nOrder successfully added!\n";
+    cout << "Order ID: " << orderIDs[count] << endl;
+
+    count++;
+}
+
+// Function to find an order by Order ID
+void findOrder(string orderIDs[], string customerNames[],
+               int magwinyas[], float totalCosts[], int count)
+{
+    string searchID;
+
+    cout << "\nEnter Order ID to search: ";
+    cin >> searchID;
+
+    bool found = false;
+
+    for (int i = 0; i < count; i++)
+    {
+        if (orderIDs[i] == searchID)
+        {
+            cout << "\n========== ORDER FOUND ==========\n";
+            cout << "Order ID:       " << orderIDs[i] << endl;
+            cout << "Customer Name:  " << customerNames[i] << endl;
+            cout << "Magwinyas:      " << magwinyas[i] << endl;
+            cout << "Total Cost:     R"
+                 << fixed << setprecision(2)
+                 << totalCosts[i] << endl;
+
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        cout << "\nOrder ID " << searchID << " was not found.\n";
+    }
+}
+
+// Function to calculate total revenue
+void calculateRevenue(float totalCosts[], int count)
+{
+    float totalRevenue = 0;
+
+    for (int i = 0; i < count; i++)
+    {
+        totalRevenue += totalCosts[i];
+    }
+
+    cout << "\n========== TOTAL REVENUE ==========\n";
+    cout << "Total revenue: R"
+         << fixed << setprecision(2)
+         << totalRevenue << endl;
+}
+
+int main()
+{
+    // Parallel arrays
+    string orderIDs[MAX_ORDERS];
+    string customerNames[MAX_ORDERS];
+    int magwinyas[MAX_ORDERS];
+    float totalCosts[MAX_ORDERS];
+
+    // First 10 orders supplied by the assessment
+    orderIDs[0] = "101";
+    orderIDs[1] = "102";
+    orderIDs[2] = "103";
+    orderIDs[3] = "104";
+    orderIDs[4] = "105";
+    orderIDs[5] = "106";
+    orderIDs[6] = "107";
+    orderIDs[7] = "108";
+    orderIDs[8] = "109";
+    orderIDs[9] = "110";
+
+    customerNames[0] = "Thabo";
+    customerNames[1] = "Lerato";
+    customerNames[2] = "Nomvula";
+    customerNames[3] = "Sipho";
+    customerNames[4] = "Bongani";
+    customerNames[5] = "Lindiwe";
+    customerNames[6] = "Jabulani";
+    customerNames[7] = "Ayanda";
+    customerNames[8] = "Kgosi";
+    customerNames[9] = "Refilwe";
+
+    magwinyas[0] = 3;
+    magwinyas[1] = 5;
+    magwinyas[2] = 2;
+    magwinyas[3] = 4;
+    magwinyas[4] = 6;
+    magwinyas[5] = 1;
+    magwinyas[6] = 3;
+    magwinyas[7] = 2;
+    magwinyas[8] = 6;
+    magwinyas[9] = 4;
+
+    totalCosts[0] = 15.75;
+    totalCosts[1] = 30.50;
+    totalCosts[2] = 10.00;
+    totalCosts[3] = 22.00;
+    totalCosts[4] = 40.25;
+    totalCosts[5] = 5.50;
+    totalCosts[6] = 18.00;
+    totalCosts[7] = 12.75;
+    totalCosts[8] = 28.00;
+    totalCosts[9] = 24.50;
+
+    int count = 10;
+    int choice;
+
+    do
+    {
+        cout << "\n========================================\n";
+        cout << "       MAGWINYA MAGIC ORDER SYSTEM\n";
+        cout << "========================================\n";
+        cout << "1. Add a new order\n";
+        cout << "2. Display all orders\n";
+        cout << "3. Find an order by Order ID\n";
+        cout << "4. Calculate total revenue\n";
+        cout << "5. Exit\n";
+        cout << "========================================\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                addOrder(orderIDs, customerNames,
+                         magwinyas, totalCosts, count);
+                break;
+
+            case 2:
+                displayOrders(orderIDs, customerNames,
+                              magwinyas, totalCosts, count);
+                break;
+
+            case 3:
+                findOrder(orderIDs, customerNames,
+                          magwinyas, totalCosts, count);
+                break;
+
+            case 4:
+                calculateRevenue(totalCosts, count);
+                break;
+
+            case 5:
+                cout << "\nThank you for using Magwinya Magic Order System.\n";
+                break;
+
+            default:
+                cout << "\nInvalid choice. Please try again.\n";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
